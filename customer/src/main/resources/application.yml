@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: customer
+  datasource:
+    url: jdbc:h2:mem:customerdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update  # Use 'update' to update schema based on entities
+    show-sql: true  # Optional: Display SQL queries in the console
+    database-platform: org.hibernate.dialect.H2Dialect
+  sql:
+    init:
+      mode: always  # Ensure scripts are run every time the app starts
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+      base-path: /actuator
+    prometheus:
+      enabled: true

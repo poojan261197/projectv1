@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customer-api
+  template:
+    metadata:
+      labels:
+        app: customer-api
+    spec:
+      containers:
+        - name: customer-api
+          image: poojan2611/projectw:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "dev"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-api-service
+spec:
+  selector:
+    app: customer-api
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  #type: LoadBalancer
